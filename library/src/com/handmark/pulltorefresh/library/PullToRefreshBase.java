@@ -158,6 +158,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	public final Mode getCurrentMode() {
 		return mCurrentMode;
 	}
+	
+	public final void setCurrentMode(Mode mode){
+		this.mCurrentMode = mode;
+	}
 
 	@Override
 	public final boolean getFilterTouchEvents() {
@@ -223,7 +227,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	@Override
-	public final boolean onInterceptTouchEvent(MotionEvent event) {
+	public boolean onInterceptTouchEvent(MotionEvent event) {
 
 		if (!isPullToRefreshEnabled()) {
 			return false;
