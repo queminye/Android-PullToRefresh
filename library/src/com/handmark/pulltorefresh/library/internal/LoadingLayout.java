@@ -39,6 +39,7 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
 import com.handmark.pulltorefresh.library.R;
+import com.handmark.pulltorefresh.util.ViewUtil;
 
 @SuppressLint("ViewConstructor")
 public abstract class LoadingLayout extends FrameLayout implements ILoadingLayout {
@@ -198,7 +199,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 				return mInnerLayout.getWidth();
 			case VERTICAL:
 			default:
-				return mInnerLayout.getHeight();
+				 return mInnerLayout.getHeight() == 0 ? ViewUtil.dip2px(getContext(), 47) : mInnerLayout.getHeight();
 		}
 	}
 
