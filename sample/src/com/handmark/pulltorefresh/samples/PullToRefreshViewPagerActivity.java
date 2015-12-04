@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import com.handmark.pulltorefresh.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.util.Logger;
 
 public class PullToRefreshViewPagerActivity extends Activity implements OnRefreshListener<ViewPager> {
 
@@ -43,6 +44,7 @@ public class PullToRefreshViewPagerActivity extends Activity implements OnRefres
 
 		ViewPager vp = mPullToRefreshViewPager.getRefreshableView();
 		vp.setAdapter(new SamplePagerAdapter());
+		vp.setCurrentItem(1);
 	}
 
 	@Override
@@ -57,11 +59,12 @@ public class PullToRefreshViewPagerActivity extends Activity implements OnRefres
 
 		@Override
 		public int getCount() {
-			return sDrawables.length;
+			return 3;
 		}
 
 		@Override
 		public View instantiateItem(ViewGroup container, int position) {
+			Logger.d("instantiateItem");
 			ImageView imageView = new ImageView(container.getContext());
 			imageView.setImageResource(sDrawables[position]);
 
@@ -73,13 +76,31 @@ public class PullToRefreshViewPagerActivity extends Activity implements OnRefres
 
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
+			Logger.d("destroyItem");
 			container.removeView((View) object);
 		}
 
 		@Override
 		public boolean isViewFromObject(View view, Object object) {
+			Logger.d("isViewFromObject");
 			return view == object;
 		}
+
+		@Override
+		public void startUpdate(ViewGroup container)
+		{
+			Logger.d("startUpdate");
+			super.startUpdate(container);
+		}
+
+		@Override
+		public void finishUpdate(ViewGroup container)
+		{
+			Logger.d("finishUpdate");
+			super.finishUpdate(container);
+		}
+		
+		
 	}
 
 	private class GetDataTask extends AsyncTask<Void, Void, Void> {
@@ -88,7 +109,7 @@ public class PullToRefreshViewPagerActivity extends Activity implements OnRefres
 		protected Void doInBackground(Void... params) {
 			// Simulates a background job.
 			try {
-				Thread.sleep(4000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
 			return null;
@@ -97,6 +118,7 @@ public class PullToRefreshViewPagerActivity extends Activity implements OnRefres
 		@Override
 		protected void onPostExecute(Void result) {
 			mPullToRefreshViewPager.onRefreshComplete();
+			mPullToRefreshViewPager.getRefreshableView().getAdapter().notifyDataSetChanged();
 			super.onPostExecute(result);
 		}
 	}
