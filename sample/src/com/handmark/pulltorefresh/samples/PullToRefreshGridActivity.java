@@ -33,6 +33,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.handmark.pulltorefresh.view.GridViewWithHeaderAndFooter;
 
 public final class PullToRefreshGridActivity extends Activity {
 
@@ -53,16 +54,16 @@ public final class PullToRefreshGridActivity extends Activity {
 		mGridView = mPullRefreshGridView.getRefreshableView();
 
 		// Set a listener to be invoked when the list should be refreshed.
-		mPullRefreshGridView.setOnRefreshListener(new OnRefreshListener2<GridView>() {
+		mPullRefreshGridView.setOnRefreshListener(new OnRefreshListener2<GridViewWithHeaderAndFooter>() {
 
 			@Override
-			public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+			public void onPullDownToRefresh(PullToRefreshBase<GridViewWithHeaderAndFooter> refreshView) {
 				Toast.makeText(PullToRefreshGridActivity.this, "Pull Down!", Toast.LENGTH_SHORT).show();
 				new GetDataTask().execute();
 			}
 
 			@Override
-			public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+			public void onPullUpToRefresh(PullToRefreshBase<GridViewWithHeaderAndFooter> refreshView) {
 				Toast.makeText(PullToRefreshGridActivity.this, "Pull Up!", Toast.LENGTH_SHORT).show();
 				new GetDataTask().execute();
 			}
